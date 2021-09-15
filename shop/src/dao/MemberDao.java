@@ -147,18 +147,18 @@ public class MemberDao {
 	}
 	
 	//총 멤버 수
-	public int totalMemberCount() throws ClassNotFoundException, SQLException {
+	public int totalMemberCount(String searchMemberId) throws ClassNotFoundException, SQLException {
 		int totalCount = 0 ;
 		//db접속 메소드 호출
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		//쿼리생성, 실행
-		String sql = "SELECT count(*) FROM member";
+		String sql = "SELECT count(*) FROM member WHERE member_id LIKE ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		
+		stmt.setString(1, "%"+searchMemberId+"%");
 		ResultSet rs= stmt.executeQuery();
 		while(rs.next()) {
-			totalCount = rs.getInt("count(*)");
+			totalCount = rs.getInt("COUNT(*)");
 		}
 		
 		return totalCount;

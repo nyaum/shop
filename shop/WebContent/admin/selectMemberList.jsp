@@ -19,6 +19,7 @@
 	if(request.getParameter("searchMemberId") != null) {
 		searchMemberId = request.getParameter("searchMemberId");	
 	}
+	System.out.println(searchMemberId + "Search Keyword");
 	
 	//페이징
 	int currentPage = 1;
@@ -32,13 +33,14 @@
 	
 	MemberDao memberDao = new MemberDao();
 	ArrayList<Member> memberList = null;
+	int totalCount = 0;
 	if(searchMemberId.equals("")) { //검색어가 없을때
 		memberList = memberDao.selectMemberListAllByPage(beginRow, ROW_PER_PAGE);
+		totalCount = memberDao.totalMemberCount("");
 	} else {
 		memberList = memberDao.selectMemberListAllBySearchMemberId(beginRow, ROW_PER_PAGE,searchMemberId);
+		totalCount = memberDao.totalMemberCount(searchMemberId);
 	}
-	
-	int totalCount = memberDao.totalMemberCount();
 %>
 <!DOCTYPE html>
 <html>
@@ -104,7 +106,7 @@
 	<%
 		if (beginRow >= 1) {
 	%>
-			<a class="btn btn-outline-dark" href="./selectMemberList.jsp?currentPage=<%=currentPage-1%>&searchMemberId=<%=searchMemberId%>">이전</a>
+			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=currentPage-1%>&searchMemberId=<%=searchMemberId%>">이전</a>
 	<%
 		}
 		int lastPage = totalCount / ROW_PER_PAGE;
@@ -115,7 +117,7 @@
 		
 		if (currentPage < lastPage) {
 	%>	
-			<a class="btn btn-outline-dark" href="./selectMemberList.jsp?currentPage=<%=currentPage+1%>&searchMemberId=<%=searchMemberId%>">다음</a>
+			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=currentPage+1%>&searchMemberId=<%=searchMemberId%>">다음</a>
 	<%
 		}
 	%>
