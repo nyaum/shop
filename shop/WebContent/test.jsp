@@ -9,7 +9,7 @@
 <body>
 	<h1>test page</h1>
 	<div>
-		<jsp:include page="/partial/submenu.jsp"></jsp:include>
+		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
 	</div>
 	<!-- end submenu include -->
 	<h1>메인 페이지</h1>

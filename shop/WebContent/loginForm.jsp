@@ -16,7 +16,12 @@
 <title>Login Form</title>
 </head>
 <body>
-	<h1>로그인 페이지</h1>
+		<!-- start submenu include -->
+	<div>
+		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
+	</div>
+	<br>
+	<h1>Project Login Page</h1>
 	<form method="post" action="<%=request.getContextPath()%>/loginAction.jsp">
 		<div class="form-group">Member ID
 			<input type="text" name="memberId" class="form-control" style="width:350px; font-size:20px">

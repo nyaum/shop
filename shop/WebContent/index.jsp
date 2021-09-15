@@ -10,10 +10,12 @@
 <body>
 	<!-- start submenu include -->
 	<div>
-		<jsp:include page="/partial/submenu.jsp"></jsp:include>
+		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
 	</div>
+	<br>
 	<!-- end submenu include -->
-	<h1>메인 페이지</h1>
+	<h1>Project Main Page</h1>
+	<br>
 	<%
 		if(session.getAttribute("loginMember") == null) {
 	%>		
@@ -34,8 +36,13 @@
 			<div>
 				<%=loginMember.getMemberName()%>, 로그인! &nbsp;
 				<a href="<%=request.getContextPath()%>/logout.jsp" class="btn btn-outline-dark">로그아웃</a>
+	<%
+				if(loginMember.getMemberLevel() > 0) {
+	%>
+						<a href="<%=request.getContextPath()%>/admin/adminIndex.jsp" class="btn btn-outline-dark">관리자 메뉴</a>
 			</div>
-	<% 
+	<%
+				}
 		}
 	%>
 </body>
