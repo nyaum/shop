@@ -68,6 +68,9 @@
 				<th>Gender</th>
 				<th>Update Date</th>
 				<th>Create Date</th>
+				<th>등급 수정</th>
+				<th>비밀번호 수정</th>
+				<th>강제 탈퇴</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -95,6 +98,18 @@
 						<td><%=m.getMemberGender()%></td>
 						<td><%=m.getUpdateDate()%></td>
 						<td><%=m.getCreateDate()%></td>
+						<td>
+						<!-- 특정 회원 등급 수정 -->
+							<a href="<%=request.getContextPath()%>/admin/updateMemberLevelForm.jsp?memberNo=<%=m.getMemberNo()%>" class="btn btn-light" style="font-weight:bold;">등급 수정</a>
+						</td>
+						<td>
+						<!-- 특정 회원 비밀번호 수정 -->
+							<a href="<%=request.getContextPath()%>/admin/updateMemberPwForm.jsp?memberNo=<%=m.getMemberNo()%>" class="btn btn-light" style="font-weight:bold;">비밀번호 수정</a>
+						</td>
+						<td>
+						<!-- 특정 회원 삭제 -->
+							<a href="<%=request.getContextPath()%>/admin/deleteMemberAction.jsp?memberNo=<%=m.getMemberNo()%>" class="btn btn-danger" style="font-weight:bold;">강제 탈퇴</a>
+						</td>
 					</tr>
 			<%		
 				}

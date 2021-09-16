@@ -6,11 +6,71 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.mariadb.jdbc.internal.com.send.ComStmtExecute;
+
 import commons.DBUtil;
 import vo.Member;
  
 public class MemberDao {
 // [관리자코드]
+	// memberNo 수정 Level 입력 후 멤버 등급 수정
+	public void updateMemberLevelByAdmin(Member member, int memberNewLevel) throws ClassNotFoundException, SQLException {
+		//DB 연결 후 쿼리 작성 및 실행
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "UPDATE member SET member_level=? WHERE member_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, memberNewLevel);
+		stmt.setInt(2, member.getMemberNo());
+		
+		//디버그
+		System.out.println(stmt);
+		
+		stmt.executeUpdate();
+		
+		stmt.close();
+		conn.close();
+		
+		
+	}	
+	
+	// memberNo 수정 Pw 입력후 멤버 비밀번호 변경
+	public int updateMemberPwByAdmin(Member member, String memberPwNew) throws ClassNotFoundException, SQLException {
+		//DB 연결 후 쿼리 작성 및 실행
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "UPDATE member SET member_pw=PASSWORD(?) WHERE member_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, member.getMemberPw());
+		stmt.setInt(2, member.getMemberNo());
+		
+		//디버그
+		System.out.println(stmt);
+		
+		int row = stmt.executeUpdate();
+		return row;
+		
+		
+	}
+	
+	// memberNo 입력 후 멤버 강제 퇴장
+	public void deleteMemberByAdmin(int memberNo) throws ClassNotFoundException, SQLException {
+		//DB 연결 후 쿼리 작성 및 실행
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "DELETE FROM member WHERE member_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, memberNo);
+		
+		//디버그
+		System.out.println(stmt);
+		
+		stmt.executeUpdate();
+		
+		stmt.close();
+		conn.close();
+	}
+	
 	//회원 아이디 검색(목록)
 	public ArrayList<Member> selectMemberListAllBySearchMemberId(int beginRow, int rowPerPage, String searchMemberId) throws ClassNotFoundException, SQLException{
 		//회원 목록 출력
