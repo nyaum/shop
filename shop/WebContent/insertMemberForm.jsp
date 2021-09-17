@@ -12,9 +12,43 @@
 	</div>
 	<br>
 	<h1>Insert Member Page</h1>
+	<br>
+	
+	<%
+		String memberIdCheck = "";
+		if(request.getParameter("memberIdCheck") != null) {
+			memberIdCheck = request.getParameter("memberIdCheck");
+		}
+	%>
+	
+	<!-- 멤버 아이디가 사용 가능한지 확인하는 폼 -->
+	<form method="post" action="<%=request.getContextPath()%>/selectMemberIdCheckAction.jsp">
+		<div class="form-group" style="font-weight:bold">
+			ID 중복 확인
+			<input type="text" name="memberIdCheck" class="form-control" style="width:350px; font-size:20px">
+			<div>
+				<!-- idCheckResult 값에 따라 출력 -->
+				<%
+					if(request.getParameter("idCheckResult") == null) {
+				%>
+						사용 가능한 아이디입니다.
+				<%
+					} else {
+				%>
+						이미 존재하는 아이디입니다.
+				<%		
+					}
+				%>
+			</div>
+			<br>
+			<button type="submit" class="btn btn-outline-dark">중복확인</button>
+		</div>
+	</form>
+	<br>
+	<!-- 회원가입 폼 -->
 	<form method="post" action="<%=request.getContextPath()%>/insertMemberAction.jsp">
 		<div class="form-group" style="font-weight:bold">ID
-			<input type="text" name="memberId" class="form-control" style="width:350px; font-size:20px">
+			<input type="text" name="memberId" class="form-control" style="width:350px; font-size:20px" value="<%=memberIdCheck%>" readonly>
 		</div>
 		<div class="form-group" style="font-weight:bold">PWD
 			<input type="password" name="memberPw" class="form-control" style="width:350px; font-size:20px">

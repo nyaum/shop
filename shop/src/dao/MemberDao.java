@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.mariadb.jdbc.internal.com.send.ComStmtExecute;
-
 import commons.DBUtil;
 import vo.Member;
  
@@ -140,7 +138,6 @@ public class MemberDao {
 		return list;
 	}
 	
-	
 	public ArrayList<Member> selectMemberListAllByPage(int beginRow, int rowPerPage) throws ClassNotFoundException, SQLException{
 		//회원 목록 출력
 		ArrayList<Member> list = new ArrayList<Member>();
@@ -225,6 +222,34 @@ public class MemberDao {
 	}
 	
 // [회원 코드]
+	
+	//멤버 아이디 중복확인 코드
+	public String selectMemberId(String memberIdCheck) throws ClassNotFoundException, SQLException {
+		String memberId = null;
+		
+		// DB연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		// 쿼리 작성 및 실행
+		String sql = "SELECT member_id memberId FROM member WHERE member_id=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberIdCheck);
+		
+		// 디버그
+		System.out.println(stmt);
+		
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			memberId = rs.getString("memberId");
+		}
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return memberId; // null이 나온다면 사용 가능한 ID, null이 아닐경우 사용 불가능한 ID
+	}
+	
 	public int insertMember(Member member) throws ClassNotFoundException, SQLException {
 		//회원 가입 코드
 		DBUtil dbUtil = new DBUtil();
@@ -262,6 +287,7 @@ public class MemberDao {
 		return row;
 		
 	}
+	
 	public Member login(Member member) throws ClassNotFoundException, SQLException {
 		
 		System.out.println(member.getMemberId());
