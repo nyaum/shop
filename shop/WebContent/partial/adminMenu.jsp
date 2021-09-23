@@ -21,7 +21,7 @@
 		</li>
 		<!-- 전자책 목록, 추가(이미지 관리), 수정, 삭제 -->
 		<li class="nav-item">	
-			<a href="<%=request.getContextPath()%>/admin/" class="nav-link">전자책 관리 </a>
+			<a href="<%=request.getContextPath()%>/admin/selectEbookList.jsp" class="nav-link">전자책 관리 </a>
 		</li>
 		<li class="nav-item">	
 			<a href="<%=request.getContextPath()%>/admin/" class="nav-link">주문 관리 </a>

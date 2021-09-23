@@ -53,8 +53,8 @@
 						<td><%=c.getCategoryState()%></td>
 						<td>
 							<select>
-								<option name="categoryState" value="Y">사용</option>
-								<option name="categoryState" value="N">미사용</option>
+								<option id="categoryState" value="Y">사용</option>
+								<option id="categoryState" value="N">미사용</option>
 							</select>
 						</td>
 					</tr>		

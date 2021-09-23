@@ -55,6 +55,7 @@
 		<button type="submit" class="btn btn-outline-dark">중복확인</button>
 	</form>
 	<br>
+	<!-- 카테고리 추가 폼 -->
 	<form method="post" action="<%=request.getContextPath()%>/admin/insertCategoryAction.jsp">
 		<div>추가 할 카테고리 이름</div>
 		<br>
@@ -63,10 +64,8 @@
 		</div>
 		<br>
 		<div>카테고리 사용 여부</div>
-		<select>
-			<option name="categoryState" value="Y">사용</option>
-			<option name="categoryState" value="N">미사용</option>
-		</select>
+		<input type="radio" name="categoryState" value="Y">Y
+		<input type="radio" name="categoryState" value="N">N
 		<br><br>
 		<button type="submit" class="btn btn-outline-dark">추가</button>
 	</form>

@@ -9,7 +9,7 @@
 		return;
 	}
 	
-	if(request.getParameter("categoryName").equals("") || request.getParameter("categoryState").equals("")){
+	if(request.getParameter("categoryName").equals("") || request.getParameter("categoryState").equals("")) {
 		response.sendRedirect(request.getContextPath() + "/admin/insertCategoryForm.jsp");
 		return;
 	}
@@ -18,6 +18,7 @@
 	String categoryState = request.getParameter("categoryState");
 	
 	Category category = new Category();
+	
 	category.setCategoryName(categoryName);
 	category.setCategoryState(categoryState);
 	

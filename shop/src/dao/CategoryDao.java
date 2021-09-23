@@ -77,7 +77,7 @@ public class CategoryDao {
 		Connection conn = dbUtil.getConnection();
 		
 		// 쿼리 작성 및 실행
-		String sql = "SELECT category_name categoryName FROM category WHERE category_name=?";
+		String sql = "SELECT category_name FROM category WHERE category_name=?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, categoryNameCheck);
 		
