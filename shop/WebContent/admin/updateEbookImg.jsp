@@ -22,18 +22,27 @@
 <title>Insert title here</title>
 </head>
 <body>
+<Div style="text-align:center">
    <!-- 관리자 메뉴 인클루드(include)시작 ,페이지 형태만 인클루드 하는 것이 좋음(코드 형태는 비추천).-->
    <div>
       <jsp:include page="/partial/adminMenu.jsp"></jsp:include><!-- jsp액션태그 -->
    </div>
+   <br>
+   <h1>Update Image</h1>
    <!-- 관리자 메뉴 인클루드 끝 -->
    <form action="<%=request.getContextPath()%>/admin/updateEbookImgAction.jsp" method="post"
         enctype="multipart/form-data"> 
         <!-- multipart/form-data : 액션으로 기계어코드를 넘길때 사용 -->
         <!-- application/x-www-form-urlencoded : 액션으로 문자열 넘길때 사용 -->
-      <input type="text" name="ebookNo" value="<%=ebookNo%>" readonly="readonly"> <!-- type="hidden" -->
-      <input type="file" name="ebookImg">
-      <button type="submit">이미지파일 수정</button>
+      <input type="hidden" name="ebookNo" value="<%=ebookNo%>" readonly> <!-- type="hidden" -->
+      <br><br>
+      <div class="custom-file" style="width:500px">
+      	<input type="file" name="ebookImg" class="custom-file-input">
+      	<label class="custom-file-label" for="ebookNo"></label>
+      </div>
+      <br><br>
+      <button type="submit" class="btn btn-outline-dark">이미지 수정</button>
    </form>
+</Div>
 </body>
 </html>

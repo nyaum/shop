@@ -18,7 +18,7 @@
 	CategoryDao categoryDao = new CategoryDao();
 	ArrayList<Category> categoryList = null;
 	
-	categoryList = categoryDao.selectCategoryListAll();
+	categoryList = categoryDao.selectCategoryList();
 %>
 <!DOCTYPE html>
 <html>
@@ -40,6 +40,7 @@
 				<th>Update Date</th>
 				<th>Create Date</th>
 				<th>Current Category State</th>
+				<th>Edit State</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -50,12 +51,28 @@
 						<td><%=c.getCategoryName()%></td>
 						<td><%=c.getUpdateDate()%></td>
 						<td><%=c.getCreateDate()%></td>
-						<td><%=c.getCategoryState()%></td>
+						<td><%=c.getCategoryState()%></td>						
 						<td>
-							<select>
-								<option id="categoryState" value="Y">사용</option>
-								<option id="categoryState" value="N">미사용</option>
+						<!-- 사용상태 수정 -->
+							<form method="post" action="<%=request.getContextPath()%>/admin/updateCategoryStateAction.jsp?categoryName=<%=c.getCategoryName()%>">
+							<select name="categoryState" >
+							<%
+								if(c.getCategoryState().equals("Y")) {
+							%>
+									<option value="Y" selected="selected">사용</option>
+									<option value="N">미사용</option>
+							<%
+								} else {
+							%>
+									<option value="Y">사용</option>
+									<option value="N" selected="selected">미사용</option>
+							<%		
+								}
+							%>
 							</select>
+							&nbsp;
+							<button type="submit" class="btn btn-outline-dark btn-sm">변경</button>
+							</form>
 						</td>
 					</tr>		
 			<%		

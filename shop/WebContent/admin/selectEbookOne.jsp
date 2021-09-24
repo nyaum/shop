@@ -23,10 +23,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div style="text-align:center">
 	<!-- start: adminMenu include -->
 	<div>
 		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
 	</div>
+	<br>
 	<%
 		EbookDao ebookDao = new EbookDao();
 		Ebook ebook = ebookDao.selectEbookOne(ebookNo);
@@ -34,13 +36,16 @@
 	<div>
 		<%=ebook.getEbookNo()%>
 	</div>
+	<br>
 	<div>
 		<img src="<%=request.getContextPath()%>/image/<%=ebook.getEbookImg()%>">
 	</div>
+	<br>
 	<div>
-		<a href="<%=request.getContextPath()%>">삭제</a>
-		<a href="<%=request.getContextPath()%>">가격 수정</a>
-		<a href="<%=request.getContextPath()%>/admin/updateEbookImg.jsp?ebookNo=<%=ebook.getEbookNo()%>">이미지 수정</a>
+		<a href="<%=request.getContextPath()%>/admin/updateEbookImg.jsp?ebookNo=<%=ebook.getEbookNo()%>" class="btn btn-outline-dark">이미지 수정</a>
+		<a href="<%=request.getContextPath()%>" class="btn btn-outline-dark">가격 수정</a>
+		<a href="<%=request.getContextPath()%>" class="btn btn-outline-danger">삭제</a>
 	</div>
+</div>
 </body>
 </html>

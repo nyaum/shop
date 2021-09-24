@@ -15,16 +15,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <meta charset="UTF-8">
 <title>Insert Category Form</title>
 </head>
 <body>
 	<%
-		String categoryNameCheck = "";
-		if(request.getParameter("categoryNameCheck") != null) {
-			categoryNameCheck = request.getParameter("categoryNameCheck");
-		}
+	String categoryCheckResult = "";
+	if(request.getParameter("categoryCheckResult") != null){
+		categoryCheckResult = request.getParameter("categoryCheckResult");
+	}
+	
+	String categoryNameCheck = "";
+	if(request.getParameter("categoryNameCheck") != null){
+		categoryNameCheck = request.getParameter("categoryNameCheck");
+	}
 	%>
 	<div>
 		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
@@ -39,15 +43,11 @@
 			<div>
 				<!-- categoryCheckResult 값에 따라 출력 -->
 				<%
-					if(request.getParameter("categoryNameCheckResult") == null) {
+				if(!categoryCheckResult.equals("")){
 				%>
-						사용 가능한 카테고리 이름입니다.
+					<%=request.getParameter("categoryCheckResult") %>
 				<%
-					} else {
-				%>
-						이미 존재하는 카테고리 이름입니다.
-				<%		
-					}
+				}
 				%>
 			</div>
 		</div>
@@ -62,10 +62,6 @@
 		<div>
 			<input type="text" name="categoryName" value="<%=categoryNameCheck%>" class="form-control" style="width:350px; font-size:20px" readonly>
 		</div>
-		<br>
-		<div>카테고리 사용 여부</div>
-		<input type="radio" name="categoryState" value="Y">Y
-		<input type="radio" name="categoryState" value="N">N
 		<br><br>
 		<button type="submit" class="btn btn-outline-dark">추가</button>
 	</form>
