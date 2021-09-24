@@ -45,7 +45,7 @@ public class EbookDao {
 		return ebook;
 	}
 	
-	// [전자책 관리] 전자책 목록을 출력하는 메서드
+	// [전자책 관리 & 고객 전자책 출력] 전자책 목록을 출력하는 메서드
 	// SELECT 한 값을 자료구조화 하여 list 생성 후 리턴
 	public ArrayList<Ebook> selectEbookList(int beginRow, int rowPerPage) throws ClassNotFoundException, SQLException {
 		ArrayList<Ebook> list = new ArrayList<>();
@@ -55,7 +55,7 @@ public class EbookDao {
 		 */
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, category_name categoryName, ebook_state ebookState FROM ebook ORDER BY create_date DESC LIMIT ?, ?";
+		String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_img ebookImg, ebook_price ebookPrice, category_name categoryName, ebook_state ebookState FROM ebook ORDER BY create_date DESC LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, rowPerPage);
@@ -72,6 +72,8 @@ public class EbookDao {
 			// 캡슐화 메서드(setter)를 통해 쓰기
 			e.setEbookNo(rs.getInt("ebookNo"));
 			e.setEbookTitle(rs.getString("ebookTitle"));
+			e.setEbookImg(rs.getString("ebookImg"));
+			e.setEbookPrice(rs.getInt("ebookPrice"));
 			e.setCategoryName(rs.getString("categoryName"));
 			e.setEbookState(rs.getString("ebookState"));
 

@@ -24,7 +24,7 @@
 			<a href="<%=request.getContextPath()%>/admin/selectEbookList.jsp" class="nav-link">전자책 관리 </a>
 		</li>
 		<li class="nav-item">	
-			<a href="<%=request.getContextPath()%>/admin/" class="nav-link">주문 관리 </a>
+			<a href="<%=request.getContextPath()%>/admin/selectOrderList.jsp" class="nav-link">주문 관리 </a>
 		</li>
 		<li class="nav-item">	
 			<a href="<%=request.getContextPath()%>/admin/" class="nav-link">상품평 관리 </a>

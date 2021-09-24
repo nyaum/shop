@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import = "vo.*" %>
+<%@ page import="vo.*"%>
+<%@ page import="dao.*"%>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +16,7 @@
 	</div>
 	<br>
 	<!-- end submenu include -->
+	<div style="text-align:center">
 	<h1>Project Main Page</h1>
 	<br>
 	<%
@@ -45,5 +48,50 @@
 				}
 		}
 	%>
+	<br>
+	<!-- 상품 목록 출력 -->
+	<%
+		//페이징
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));	
+		}
+	
+		//rowPerPage 변수는 항상 10으로 고정되는 수 > 절대 변하지 않음 >> 상수
+		final int ROW_PER_PAGE = 20;
+		int beginRow = (currentPage-1)*ROW_PER_PAGE;
+		
+		//목록
+		EbookDao ebookDao = new EbookDao();
+		ArrayList<Ebook> ebookList = ebookDao.selectEbookList(beginRow, ROW_PER_PAGE);
+	%>
+	<table style="text-align:center" class="table table-striped">
+		<tr>
+		<%
+			int i = 0;
+			for(Ebook e : ebookList) {
+		%>
+					<td>
+						<div>
+							<img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200">
+						</div>
+						<div><%=e.getEbookTitle()%></div>
+						<div><%=e.getEbookPrice()%> ₩</div>
+					</td>
+		<%
+				i += 1; // for 문이 끝날때마다 i가 1씩 증가함
+				if(i%5 == 0) {
+		%>
+					</tr><tr>
+		<%
+				}
+			}
+		%>
+		</tr>
+	</table>
+	<div>
+		
+	</div>
+	</div>
 </body>
 </html>
