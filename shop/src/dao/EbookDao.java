@@ -10,6 +10,47 @@ import vo.*;
 import commons.*;
 
 public class EbookDao {
+	
+	
+	//인기 상품 목록
+	public ArrayList<Ebook> selectPopularEbookList() throws ClassNotFoundException, SQLException {
+		ArrayList<Ebook> list = new ArrayList<>();
+		/*
+		 * SELECT t.ebook_no ebookNo, e.ebook_title ebookTitle, e.ebook_img ebookImg, e.ebook_price ebookPrice FROM ebook e INNER JOIN (SELECT ebook_no, COUNT(ebook_no) cnt FROM orders GROUP BY ebook_no ORDER BY COUNT(ebook_no) DESC LIMIT 0, 5) t ON e.ebook_no = t.ebook_no
+		 */
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "SELECT t.ebook_no ebookNo, e.ebook_title ebookTitle, e.ebook_img ebookImg, e.ebook_price ebookPrice FROM ebook e INNER JOIN (SELECT ebook_no, COUNT(ebook_no) cnt FROM orders GROUP BY ebook_no ORDER BY COUNT(ebook_no) DESC LIMIT 0, 5) t ON e.ebook_no = t.ebook_no";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+
+		ResultSet rs = stmt.executeQuery();
+
+		System.out.println("EbookDao.selectEbookList stmt : " + stmt);
+		System.out.println("EbookDao.selectEbookList rs : " + rs);
+
+
+		while (rs.next()) {
+			Ebook e = new Ebook();
+
+			// 정보은닉되어있는 필드값 직접 쓰기 불가
+			// 캡슐화 메서드(setter)를 통해 쓰기
+			e.setEbookNo(rs.getInt("ebookNo"));
+			e.setEbookTitle(rs.getString("ebookTitle"));
+			e.setEbookImg(rs.getString("ebookImg"));
+			e.setEbookPrice(rs.getInt("ebookPrice"));
+
+			list.add(e);
+		}
+
+		rs.close();
+		stmt.close();
+		conn.close();
+
+		return list;
+		
+	}
+	
+	//책 이미지 수정
 	public void updateEbookImg(Ebook ebook) throws ClassNotFoundException, SQLException {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -21,7 +62,7 @@ public class EbookDao {
 		stmt.close();
 		conn.close();
 	}
-	
+	//책 정보
 	public Ebook selectEbookOne(int ebookNo) throws ClassNotFoundException, SQLException {
 		Ebook ebook = null;
 		

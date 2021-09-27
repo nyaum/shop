@@ -37,8 +37,10 @@
 			Member loginMember = (Member)session.getAttribute("loginMember");	
 	%>
 			<div>
-				<%=loginMember.getMemberName()%>, 로그인! &nbsp;
-				<a href="<%=request.getContextPath()%>/logout.jsp" class="btn btn-outline-dark">로그아웃</a>
+				<%=loginMember.getMemberName()%>, 로그인!<br><br>
+				<a href="<%=request.getContextPath()%>/logout.jsp" class="btn btn-outline-dark">로그아웃</a>&nbsp;
+				<a href="<%=request.getContextPath()%>" class="btn btn-outline-dark">회원정보</a>&nbsp;
+				<a href="<%=request.getContextPath()%>/selectOrderListByMember.jsp" class="btn btn-outline-dark">주문목록</a>
 	<%
 				if(loginMember.getMemberLevel() > 0) {
 	%>
@@ -47,8 +49,44 @@
 	<%
 				}
 		}
+		EbookDao ebookDao = new EbookDao();
+		
+	//인기목록 5개 출력
+	ArrayList<Ebook> popularEbookList = ebookDao.selectPopularEbookList();
+	
+	//신규 상품 5개 출력
+
 	%>
+	<br><br>
+	<!-- 신규 상품 5개 출력 -->
+	<h2>신규 상품 목록</h2>
+
 	<br>
+	<!-- 인기 상품 5개 출력 -->
+	<h2>인기 상품 목록</h2>
+	<div>
+		<table style="text-align:center" class="table table-striped">
+			<tr>
+			<%
+				for(Ebook e : popularEbookList){
+			%>
+						<td>
+						<div>
+							<a href="">
+								<img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200px" height="200px">
+							</a>
+						</div>
+						<div style="font-weight:bold"><a href=""><%=e.getEbookTitle()%></a></div>
+						<div><%=e.getEbookPrice()%> ₩</div>
+					</td>
+			<%
+				}
+			%>
+			</tr>
+		</table>
+	</div>
+	<br>
+	<h2>전체 상품 목록</h2>
 	<!-- 상품 목록 출력 -->
 	<%
 		//페이징
@@ -61,8 +99,6 @@
 		final int ROW_PER_PAGE = 20;
 		int beginRow = (currentPage-1)*ROW_PER_PAGE;
 		
-		//목록
-		EbookDao ebookDao = new EbookDao();
 		ArrayList<Ebook> ebookList = ebookDao.selectEbookList(beginRow, ROW_PER_PAGE);
 	%>
 	<table style="text-align:center" class="table table-striped">
@@ -73,9 +109,11 @@
 		%>
 					<td>
 						<div>
-							<img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200">
+							<a href="">
+								<img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200px" height="200px">
+							</a>
 						</div>
-						<div><%=e.getEbookTitle()%></div>
+						<div style="font-weight:bold"><a href=""><%=e.getEbookTitle()%></a></div>
 						<div><%=e.getEbookPrice()%> ₩</div>
 					</td>
 		<%
