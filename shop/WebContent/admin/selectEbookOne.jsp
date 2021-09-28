@@ -3,7 +3,6 @@
 <%@ page import="dao.*" %>
 <%
 	request.setCharacterEncoding("utf-8");
-
 	//adminPage의 방어코드
 	// session에 저장된 loginMember를 받아옴
 	Member loginMember = (Member)session.getAttribute("loginMember");
