@@ -1080,7 +1080,7 @@ CREATE TABLE IF NOT EXISTS `member` (
   `create_date` datetime NOT NULL,
   PRIMARY KEY (`member_no`) USING BTREE,
   UNIQUE KEY `member_id` (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb3;
 
 -- 테이블 데이터 shop.member:~99 rows (대략적) 내보내기
 DELETE FROM `member`;
@@ -1184,8 +1184,31 @@ INSERT INTO `member` (`member_no`, `member_id`, `member_pw`, `member_level`, `me
 	(96, '599424612-3', '*A4B6157319038724E3560894F7F932C8886EBFCF', 0, 'Troy', 94, '남', '2021-09-15 00:00:00', '2021-09-15 00:00:00'),
 	(97, '514275807-2', '*A4B6157319038724E3560894F7F932C8886EBFCF', 0, 'Ferrell', 93, '남', '2021-09-15 00:00:00', '2021-09-15 00:00:00'),
 	(98, '422384179-3', '*A4B6157319038724E3560894F7F932C8886EBFCF', 0, 'Roseanne', 59, '여', '2021-09-15 00:00:00', '2021-09-15 00:00:00'),
-	(99, '401585780-1', '*A4B6157319038724E3560894F7F932C8886EBFCF', 0, 'Germayne', 62, '남', '2021-09-15 00:00:00', '2021-09-15 00:00:00');
+	(99, '401585780-1', '*A4B6157319038724E3560894F7F932C8886EBFCF', 0, 'Germayne', 62, '남', '2021-09-15 00:00:00', '2021-09-15 00:00:00'),
+	(106, 'ultimate', '*A4B6157319038724E3560894F7F932C8886EBFCF', 0, 'Ti', 21, '남', '2021-09-28 17:33:45', '2021-09-28 17:33:45');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
+
+-- 테이블 shop.notice 구조 내보내기
+DROP TABLE IF EXISTS `notice`;
+CREATE TABLE IF NOT EXISTS `notice` (
+  `notice_no` int(11) NOT NULL AUTO_INCREMENT,
+  `notice_title` varchar(500) NOT NULL,
+  `notice_content` text NOT NULL,
+  `member_no` int(11) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `update_date` datetime NOT NULL,
+  PRIMARY KEY (`notice_no`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+
+-- 테이블 데이터 shop.notice:~4 rows (대략적) 내보내기
+DELETE FROM `notice`;
+/*!40000 ALTER TABLE `notice` DISABLE KEYS */;
+INSERT INTO `notice` (`notice_no`, `notice_title`, `notice_content`, `member_no`, `create_date`, `update_date`) VALUES
+	(1, 'Test', '테스트용 입니다', 1, '2021-09-29 11:13:09', '2021-09-29 11:13:11'),
+	(2, 'Test', 'Testestestestestest', 1, '2021-09-29 14:00:23', '2021-09-29 14:00:23'),
+	(3, 'real', '123', 1, '2021-09-29 14:09:13', '2021-09-29 14:09:13'),
+	(4, 'real', '123', 1, '2021-09-29 14:09:43', '2021-09-29 14:09:43');
+/*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 
 -- 테이블 shop.orders 구조 내보내기
 DROP TABLE IF EXISTS `orders`;
@@ -1269,12 +1292,61 @@ CREATE TABLE IF NOT EXISTS `order_comment` (
   PRIMARY KEY (`order_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 테이블 데이터 shop.order_comment:~0 rows (대략적) 내보내기
+-- 테이블 데이터 shop.order_comment:~7 rows (대략적) 내보내기
 DELETE FROM `order_comment`;
 /*!40000 ALTER TABLE `order_comment` DISABLE KEYS */;
 INSERT INTO `order_comment` (`order_no`, `ebook_no`, `order_score`, `order_comment_content`, `create_date`, `update_date`) VALUES
-	(1, 3, 10, 'test', '2021-09-27 17:53:12', '2021-09-27 17:53:12');
+	(1, 3, 10, 'test', '2021-09-27 17:53:12', '2021-09-27 17:53:12'),
+	(2, 6, 8, ':/', '2021-09-28 13:58:02', '2021-09-28 13:58:03'),
+	(11, 9, 10, 'aaa', '2021-09-29 10:17:03', '2021-09-29 10:17:03'),
+	(27, 2, 10, '11', '2021-09-29 14:21:04', '2021-09-29 14:21:04'),
+	(30, 3, 5, 'half', '2021-09-28 13:38:17', '2021-09-28 13:38:19'),
+	(32, 3, 1, 'worst', '2021-09-28 13:38:35', '2021-09-28 13:38:38'),
+	(42, 3, 10, 'best :D', '2021-09-28 13:38:53', '2021-09-28 13:38:54');
 /*!40000 ALTER TABLE `order_comment` ENABLE KEYS */;
+
+-- 테이블 shop.qna 구조 내보내기
+DROP TABLE IF EXISTS `qna`;
+CREATE TABLE IF NOT EXISTS `qna` (
+  `qna_no` int(11) NOT NULL AUTO_INCREMENT,
+  `qna_category` enum('전자책 관련','개인 정보 관련','기타') NOT NULL,
+  `qna_title` varchar(50) NOT NULL,
+  `qna_content` text NOT NULL,
+  `qna_secret` enum('Y','N') NOT NULL,
+  `member_no` int(11) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `update_date` datetime NOT NULL,
+  PRIMARY KEY (`qna_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+
+-- 테이블 데이터 shop.qna:~4 rows (대략적) 내보내기
+DELETE FROM `qna`;
+/*!40000 ALTER TABLE `qna` DISABLE KEYS */;
+INSERT INTO `qna` (`qna_no`, `qna_category`, `qna_title`, `qna_content`, `qna_secret`, `member_no`, `create_date`, `update_date`) VALUES
+	(1, '전자책 관련', 'test', '테스트용입니다', 'N', 3, '2021-09-29 10:37:27', '2021-09-29 10:37:27'),
+	(2, '전자책 관련', 'test2', '테스트용입니다2', 'N', 4, '2021-09-29 10:37:37', '2021-09-29 10:37:36'),
+	(3, '전자책 관련', 'test3', 'TEST', 'N', 5, '2021-09-29 10:38:26', '2021-09-29 10:38:27'),
+	(4, '전자책 관련', 'test4', 'TEST2', 'N', 6, '2021-09-29 10:38:52', '2021-09-29 10:38:54');
+/*!40000 ALTER TABLE `qna` ENABLE KEYS */;
+
+-- 테이블 shop.qna_comment 구조 내보내기
+DROP TABLE IF EXISTS `qna_comment`;
+CREATE TABLE IF NOT EXISTS `qna_comment` (
+  `qna_no` int(11) NOT NULL,
+  `qna_comment_content` text NOT NULL,
+  `member_no` int(11) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `update_date` datetime NOT NULL,
+  PRIMARY KEY (`qna_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- 테이블 데이터 shop.qna_comment:~2 rows (대략적) 내보내기
+DELETE FROM `qna_comment`;
+/*!40000 ALTER TABLE `qna_comment` DISABLE KEYS */;
+INSERT INTO `qna_comment` (`qna_no`, `qna_comment_content`, `member_no`, `create_date`, `update_date`) VALUES
+	(1, '답글', 1, '2021-09-29 10:39:59', '2021-09-29 10:39:59'),
+	(3, '답글2', 1, '2021-09-29 10:40:18', '2021-09-29 10:40:18');
+/*!40000 ALTER TABLE `qna_comment` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
