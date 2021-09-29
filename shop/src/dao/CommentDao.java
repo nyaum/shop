@@ -2,13 +2,36 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import commons.DBUtil;
 import vo.Comment;
 
 
 public class CommentDao {
+	public double selectOrderScoreAvg(int ebookNo) throws ClassNotFoundException, SQLException {
+		double avgScore = 0;
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql ="SELECT AVG(order_score) av FROM order_comment where ebook_no=? ORDER BY ebook_no";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
+		stmt.setInt(1, ebookNo);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			avgScore = rs.getDouble("av");
+		}
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return avgScore;
+	}
+	
 	public void insertOrderComment(Comment comment) throws ClassNotFoundException, SQLException {
 		
 		DBUtil dbUtil = new DBUtil();
@@ -33,5 +56,37 @@ public class CommentDao {
 		conn.close();
 		
 		return;
+	}
+	
+	public ArrayList<Comment> commentList(int ebookNo) throws ClassNotFoundException, SQLException{
+		ArrayList<Comment> list = new ArrayList<>();
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String sql = "SELECT order_score orderScore, order_comment_content orderCommentContent, create_date createDate FROM order_comment WHERE ebook_no=? ORDER BY create_date DESC";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, ebookNo);
+		
+		System.out.println(stmt + " << commentList");
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			Comment c = new Comment();
+			
+			c.setOrderScore(rs.getInt("orderScore"));
+			c.setOrderCommentContent(rs.getString("orderCommentContent"));
+			c.setCreateDate(rs.getString("createDate"));
+			
+			list.add(c);
+						
+		}
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return list;
 	}
 }

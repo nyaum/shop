@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <title>Insert Member Page</title>
 </head>
@@ -46,25 +47,65 @@
 	</form>
 	<br>
 	<!-- 회원가입 폼 -->
-	<form method="post" action="<%=request.getContextPath()%>/insertMemberAction.jsp">
+	<form id="signin" method="post" action="<%=request.getContextPath()%>/insertMemberAction.jsp">
 		<div class="form-group" style="font-weight:bold">ID
-			<input type="text" name="memberId" class="form-control" style="width:350px; font-size:20px" value="<%=memberIdCheck%>" readonly>
+			<input id="memberId" type="text" name="memberId" class="form-control" style="width:350px; font-size:20px" value="<%=memberIdCheck%>" readonly>
 		</div>
 		<div class="form-group" style="font-weight:bold">PWD
-			<input type="password" name="memberPw" class="form-control" style="width:350px; font-size:20px">
+			<input id="memberPw" type="password" name="memberPw" class="form-control" style="width:350px; font-size:20px">
 		</div>
 		<div class="form-group" style="font-weight:bold">Name
-			<input type="text" name="memberName" class="form-control" style="width:350px; font-size:20px">
+			<input id="memberName" type="text" name="memberName" class="form-control" style="width:350px; font-size:20px">
 		</div>
 		<div class="form-group" style="font-weight:bold">Age
-			<input type="text" name="memberAge" class="form-control" style="width:100px; font-size:20px">
+			<input id="memberAge" type="text" name="memberAge" class="form-control" style="width:100px; font-size:20px">
 		</div>
 		<div class="form-group" style="font-weight:bold">Gender
 			<br>
-			<input type="radio" name="memberGender" value="남">남
-			<input type="radio" name="memberGender" value="여">여
+			<input type="radio" name="memberGender" class="memberGender" value="남">남
+			<input type="radio" name="memberGender" class="memberGender" value="여">여
 		</div>
-		<button type="submit" class="btn btn-outline-dark">회원가입</button>
+		<button id="btn" type="button" class="btn btn-outline-dark">회원가입</button>
 	</form>
+	
+	<script>
+		$('#btn').click(function(){
+			if($('#memberId').val() == '') {
+				alert('아이디를 입력하세요.')
+				return;
+			}
+			
+			if($('#memberPw').val() == '') {
+				alert('비밀번호를 입력하세요.')
+				return;
+			}
+			
+			if($('#memberName').val() == '') {
+				alert('이름을 입력하세요.')
+				return;
+			}
+			
+			if($('#memberAge').val() == '') {
+				alert('나이를 입력하세요.')
+				return;
+			}
+			
+			// . 클래스 속성으로 부르면 리턴값은 배열
+			let memberGender = $('.memberGender:checked');
+			if(memberGender.length == 0) {
+				alert('성별을 선택하세요.')
+				return;
+			}
+			
+			$('#signin').submit();
+		})
+	</script>
+	
 </body>
 </html>
+
+
+
+
+
+

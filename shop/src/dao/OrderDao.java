@@ -126,4 +126,35 @@ public class OrderDao {
 		
 		return list;
 	}
+	
+	public void insertOrderByMember(Order order) throws ClassNotFoundException, SQLException {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "INSERT INTO orders(ebook_no, member_no, order_price, create_date, update_date) VALUE(?, ?, ?, NOW(), NOW())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
+		stmt.setInt(1, order.getEbookNo());
+		stmt.setInt(2, order.getMemberNo());
+		stmt.setInt(3, order.getOrderPrice());
+		
+		System.out.println(stmt);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return;
+	}
 }
+
+
+
+
+
+
+
+
+
+

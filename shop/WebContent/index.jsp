@@ -49,19 +49,57 @@
 	<%
 				}
 		}
-		EbookDao ebookDao = new EbookDao();
+	
+	EbookDao ebookDao = new EbookDao();
+	NoticeDao noticeDao = new NoticeDao();
 		
 	//인기목록 5개 출력
 	ArrayList<Ebook> popularEbookList = ebookDao.selectPopularEbookList();
 	
-	//신규 상품 5개 출력
+	//공지사항 출력
+	ArrayList<Notice> noticeList = noticeDao.selectNoticeList();
 
 	%>
 	<br><br>
-	<!-- 신규 상품 5개 출력 -->
-	<h2>신규 상품 목록</h2>
-
-	<br>
+	<!-- 공지사항 출력 -->
+	<h2>공지사항</h2>
+	<div>
+		<table style="text-align:center" class="table table-striped">
+			<thead>
+					<tr style="font-weight:bold">
+						<td>No</td>
+						<td>Title</td>
+						<td>MemberNo</td>
+						<td>CreateDate</td>
+					</tr>
+				
+			</thead>
+			<tbody>
+			<%
+				for(Notice n : noticeList) {
+			%>
+					<tr>
+						<td style="width:10%"><%=n.getNoticeNo()%></td>
+						<td style="width:45%">
+							<a href="<%=request.getContextPath()%>/selectNoticeOne.jsp?noticeNo=<%=n.getNoticeNo()%>"><%=n.getNoticeTitle()%></a>
+						</td>
+						<td style="width:15%%"><%=n.getMemberNo()%></td>
+						<td style="width:20%"><%=n.getCreateDate()%></td>
+					</tr>
+			<%
+				}
+			%>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
 	<!-- 인기 상품 5개 출력 -->
 	<h2>인기 상품 목록</h2>
 	<div>
@@ -72,11 +110,11 @@
 			%>
 						<td>
 						<div>
-							<a href="">
+							<a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>">
 								<img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200px" height="200px">
 							</a>
 						</div>
-						<div style="font-weight:bold"><a href=""><%=e.getEbookTitle()%></a></div>
+						<div style="font-weight:bold"><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
 						<div><%=e.getEbookPrice()%> ₩</div>
 					</td>
 			<%
@@ -109,11 +147,11 @@
 		%>
 					<td>
 						<div>
-							<a href="">
+							<a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>">
 								<img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200px" height="200px">
 							</a>
 						</div>
-						<div style="font-weight:bold"><a href=""><%=e.getEbookTitle()%></a></div>
+						<div style="font-weight:bold"><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
 						<div><%=e.getEbookPrice()%> ₩</div>
 					</td>
 		<%

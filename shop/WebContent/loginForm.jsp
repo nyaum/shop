@@ -12,24 +12,49 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <title>Login Form</title>
 </head>
 <body>
-		<!-- start submenu include -->
+	<!-- start submenu include -->
 	<div>
 		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
 	</div>
 	<br>
 	<h1>Project Login Page</h1>
-	<form method="post" action="<%=request.getContextPath()%>/loginAction.jsp">
+	
+	<form id="loginForm" method="post" action="<%=request.getContextPath()%>/loginAction.jsp">
 		<div class="form-group">Member ID
-			<input type="text" name="memberId" class="form-control" style="width:350px; font-size:20px">
+			<input type="text" id="memberId" name="memberId" class="form-control" style="width:350px; font-size:20px" placeholder="Enter ID">
 		</div>
 		<div class="form-group">Member PW
-			<input type="password" name="memberPw" class="form-control" style="width:350px; font-size:20px">
+			<input type="password" id="memberPw" name="memberPw" class="form-control" style="width:350px; font-size:20px" placeholder="Enter Password">
 		</div>
-		<button type="submit" class="btn btn-outline-dark">로그인</button>
+		<button id="loginBtn" type="button" class="btn btn-outline-dark">로그인</button>
 	</form>
+	
+	<script>	
+		$('#loginBtn').click(function(){
+			//버튼 클릭시
+			if($('#memberId').val() == ''){ //id 가 공백일 경우 X
+				alert('아이디를 입력하세요')
+				return;
+			} else if($('#memberPw').val() == ''){ //password 가 공백일 경우 X
+				alert('비밀번호를 입력하세요')
+			} else {
+			$('#loginForm').submit()
+			}
+		});
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

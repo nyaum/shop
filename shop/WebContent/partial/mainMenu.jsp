@@ -6,10 +6,10 @@
 			<a href="<%=request.getContextPath()%>/index.jsp" class="nav-link">홈으로 </a>
 		</li>
 		<li class="nav-item">
-			<a href="" class="nav-link">1st </a>
+			<a href="<%=request.getContextPath()%>/selectNoticeList.jsp" class="nav-link">공지사항 </a>
 		</li>
 		<li class="nav-item">
-			<a href="" class="nav-link">2nd </a>
+			<a href="<%=request.getContextPath()%>/selectQnaList.jsp" class="nav-link">QnA </a>
 		</li>
 		<li class="nav-item">
 			<a href="" class="nav-link">3rd </a>
