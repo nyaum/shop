@@ -48,8 +48,7 @@
 <meta charset="UTF-8">
 <title>Member List</title>
 </head>
-<body>
-	
+<body>	
 	<!-- 관리자 메뉴 include -->
 	<div>
 		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>

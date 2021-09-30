@@ -12,6 +12,8 @@
 		response.sendRedirect(request.getContextPath() + "/index.jsp");
 		return;
 	}
+	
+	int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +30,7 @@
 	<br>
 	<form method="post" action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp">
 	<div style="text-align:center">
-	<input type="text" name="memberNo" readonly>
+	<input type="hidden" name="memberNo" value="<%=memberNo%>" readonly>
 	<h5>Notice Title :</h5>
 		<input type="text" name="noticeTitle" style="width:750px; font-size:16px">
 		<br><br>

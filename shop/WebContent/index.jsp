@@ -57,13 +57,15 @@
 	ArrayList<Ebook> popularEbookList = ebookDao.selectPopularEbookList();
 	
 	//공지사항 출력
-	ArrayList<Notice> noticeList = noticeDao.selectNoticeList();
-
+	final int INDEX_ROW_PER_PAGE = 3;
+	int indexBeginRow = 0;
+	
+	ArrayList<Notice> noticeList = noticeDao.selectNoticeListIndex(indexBeginRow, INDEX_ROW_PER_PAGE);
 	%>
 	<br><br>
 	<!-- 공지사항 출력 -->
 	<h2>공지사항</h2>
-	<div>
+	<div style="text-align:center">
 		<table style="text-align:center" class="table table-striped">
 			<thead>
 					<tr style="font-weight:bold">
@@ -72,19 +74,18 @@
 						<td>MemberNo</td>
 						<td>CreateDate</td>
 					</tr>
-				
 			</thead>
 			<tbody>
 			<%
 				for(Notice n : noticeList) {
 			%>
 					<tr>
-						<td style="width:10%"><%=n.getNoticeNo()%></td>
+						<td style="width:5%"><%=n.getNoticeNo()%></td>
 						<td style="width:45%">
 							<a href="<%=request.getContextPath()%>/selectNoticeOne.jsp?noticeNo=<%=n.getNoticeNo()%>"><%=n.getNoticeTitle()%></a>
 						</td>
-						<td style="width:15%%"><%=n.getMemberNo()%></td>
-						<td style="width:20%"><%=n.getCreateDate()%></td>
+						<td style="width:5%"><%=n.getMemberNo()%></td>
+						<td style="width:10%"><%=n.getCreateDate()%></td>
 					</tr>
 			<%
 				}
@@ -100,6 +101,7 @@
 			</tfoot>
 		</table>
 	</div>
+	<br>
 	<!-- 인기 상품 5개 출력 -->
 	<h2>인기 상품 목록</h2>
 	<div>

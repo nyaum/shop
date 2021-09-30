@@ -24,31 +24,17 @@
 	</div>
 	<br>
 	<!-- end submenu include -->
-	<div>
+	<h1 style="text-align:center">공지 사항</h1>
+	<div style="text-align:right">
 	<%
-		if(session.getAttribute("loginMember") == null) {
-	%>
-			<div style="text-align:right">
-				<a href="<%=request.getContextPath()%>/loginForm.jsp" class="btn btn-outline-dark">로그인 </a>
-				<a href="<%=request.getContextPath()%>/insertMemberForm.jsp" class="btn btn-outline-dark"> 회원가입</a>
-			</div>
-	<%
-		} else {
 			Member loginMember = (Member)session.getAttribute("loginMember");
-	%>
-			<div style="text-align:right">
-				<a href="<%=request.getContextPath()%>/logout.jsp" class="btn btn-outline-dark" >로그아웃</a>
-	<%
 			if (loginMember.getMemberLevel() > 0) {
 	%>
-				<a href="<%=request.getContextPath()%>/admin/insertNoticeForm.jsp" class="btn btn-outline-dark">글 작성</a>
-			</div>
+				<a href="<%=request.getContextPath()%>/admin/insertNoticeForm.jsp?memberNo=<%=loginMember.getMemberNo()%>" class="btn btn-outline-dark">글 작성</a>
 	<%
 			}
-		}
 	%>
 	</div>
-	<h1 style="text-align:center">공지 사항</h1>
 	<br>
 	<table style="text-align:center" class="table table-striped">
 		<thead>
@@ -64,17 +50,25 @@
 			for(Notice n : noticeList) {
 		%>	
 				<tr>
-					<td><%=n.getNoticeNo()%></td>
-					<td>
+					<td style="width:5%"><%=n.getNoticeNo()%></td>
+					<td style="width:55%">
 					<a href="<%=request.getContextPath()%>/selectNoticeOne.jsp?noticeNo=<%=n.getNoticeNo()%>"><%=n.getNoticeTitle()%></a>
 					</td>
-					<td><%=n.getCreateDate()%></td>
-					<td><%=n.getUpdateDate()%></td>
+					<td style="width:20%"><%=n.getCreateDate()%></td>
+					<td style="width:20%"><%=n.getUpdateDate()%></td>
 				</tr>
 		<%
 			}
 		%>
 		</tbody>
+		<tfoot>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tfoot>
 	</table>
 </body>
 </html>

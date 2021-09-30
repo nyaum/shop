@@ -9,8 +9,7 @@
 	
 	NoticeDao noticeDao = new NoticeDao();
 	
-	Notice n = noticeDao.selectNoticeOne(noticeNo);
-	
+	Notice n = noticeDao.selectNoticeOne(noticeNo);	
 %>
 <!DOCTYPE html>
 <html>
@@ -26,26 +25,50 @@
 	<br>
 	<!-- end submenu include -->
 	<div style="text-align:center">
-	<h1>공지사항 보기</h1>
+	<h1>공지사항</h1>
 	</div>
 	<br>
 	<table style="text-align:center;" class="table table-striped">
 		<tr>
 			<td style="width:10%; font-weight:bold">Title</td>
 			<td><%=n.getNoticeTitle()%></td>
+			<td></td>
 		</tr>
-		<tr style="height:500px; line-height:500px">
+		<tr style="line-height:300px">
 			<td style="width:10%; font-weight:bold">Contents</td>
 			<td><%=n.getNoticeContent()%></td>
 		</tr>
 		<tr>
 			<td style="width:10%; font-weight:bold">CreateDate</td>
 			<td><%=n.getCreateDate()%></td>
+			<td></td>
 		</tr>
 		<tr>
 			<td style="width:10%; font-weight:bold">UpdateDate</td>
 			<td><%=n.getUpdateDate()%></td>
+			<td></td>
 		</tr>
+	<tfoot>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tfoot>
 	</table>
+	<div style="text-align:center">
+		<%
+			Member loginMember = (Member)session.getAttribute("loginMember");
+			if(loginMember.getMemberLevel() > 0) {
+		%>
+			<a href="<%=request.getContextPath()%>/admin/deleteNoticeAction.jsp?noticeNo=<%=noticeNo%>" class="btn btn-outline-danger" id="delete">삭제</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<!--
+			<a href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=noticeNo%>" class="btn btn-outline-dark">수정</a>
+			-->
+		<%
+			}
+		%>
+	</div>
 </body>
 </html>

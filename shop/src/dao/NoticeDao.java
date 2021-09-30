@@ -49,6 +49,49 @@ public class NoticeDao {
 		return list;
 	}
 	
+	public ArrayList<Notice> selectNoticeListIndex(int indexBeginRow, int indexRowPerPage) throws ClassNotFoundException, SQLException {
+		ArrayList<Notice> list = new ArrayList<>();
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String sql = "SELECT"
+				+ " notice_no noticeNo,"
+				+ " notice_title noticeTitle,"
+				+ " member_no memberNo,"
+				+ " create_date createDate,"
+				+ " update_date updateDate"
+				+ " FROM notice"
+				+ " ORDER BY create_date DESC"
+				+ " LIMIT ?, ?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
+		stmt.setInt(1, indexBeginRow);
+		stmt.setInt(2, indexRowPerPage);
+		
+		System.out.println(stmt + " << noticeList stmt");
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			Notice n = new Notice();
+			
+			n.setNoticeNo(rs.getInt("noticeNo"));
+			n.setNoticeTitle(rs.getString("noticeTitle"));
+			n.setMemberNo(rs.getInt("memberNo"));
+			n.setCreateDate(rs.getString("createDate"));
+			n.setUpdateDate(rs.getString("updateDate"));
+			
+			list.add(n);
+		}
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return list;
+	}
+	
 	public void insertNotice(Notice notice) throws ClassNotFoundException, SQLException {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -103,6 +146,24 @@ public class NoticeDao {
 		conn.close();
 		
 		return notice;
+	}
+	
+	public void deleteNotice(int noticeNo) throws ClassNotFoundException, SQLException {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String sql = "DELETE FROM notice WHERE notice_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
+		stmt.setInt(1, noticeNo);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return;
 	}
 }
 
