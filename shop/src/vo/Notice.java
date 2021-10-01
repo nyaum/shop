@@ -45,5 +45,9 @@ public class Notice {
 		this.updateDate = updateDate;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
+				+ ", memberNo=" + memberNo + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+	}
 }
