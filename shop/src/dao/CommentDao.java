@@ -63,7 +63,13 @@ public class CommentDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		
-		String sql = "SELECT order_score orderScore, order_comment_content orderCommentContent, create_date createDate FROM order_comment WHERE ebook_no=? ORDER BY create_date DESC";
+		String sql = "SELECT"
+				+ " order_score orderScore,"
+				+ " order_comment_content orderCommentContent,"
+				+ " create_date createDate "
+				+ "FROM order_comment "
+				+ "WHERE ebook_no=? "
+				+ "ORDER BY create_date DESC";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, ebookNo);

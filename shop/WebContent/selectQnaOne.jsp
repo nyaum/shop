@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "vo.*" %>
 <%@ page import = "dao.*" %>
+<%@ page import = "java.util.*" %>
 <%
 	request.setCharacterEncoding("utf-8");
 
@@ -8,8 +9,12 @@
 	System.out.println(qnaNo);
 	
 	QnaDao qnaDao = new QnaDao();
+	QnaCommentDao qnaCommentDao = new QnaCommentDao();
 	
 	Qna q = qnaDao.selectQnaOne(qnaNo);
+	
+	ArrayList<QnaComment> qnaCommentList = qnaCommentDao.qnaCommentList(qnaNo);
+			
 %>
 <!DOCTYPE html>
 <html>
@@ -32,9 +37,9 @@
 	<thead>
 		<tr>
 			<th></th>
-			<th>Title: <%=q.getQnaTitle()%></th>
-			<th>Category: <%=q.getQnaCategory()%></th>
-			<th>MemberNo: <%=q.getMemberNo()%></th>
+			<th style="width:20%; text-align:left"><%=q.getQnaTitle()%></th>
+			<th><%=q.getQnaCategory()%></th>
+			<th><%=q.getMemberNo()%></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -60,5 +65,46 @@
 		</tr>
 	</tfoot>
 	</table>
+	<br>
+	<div style="text-align:center">
+		<h2>답변</h2>
+	</div>
+	<br>
+	<table style="text-align:center;" class="table table-striped">
+		<thead>
+			<tr>
+				<th style="width:25%">MeberNo</th>
+				<th>Comment</th>
+				<th style="width:25%">Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+				for(QnaComment qc : qnaCommentList) {
+			%>
+			<tr>
+				<td><%=qc.getMemberNo()%></td>
+				<td><%=qc.getQnaCommentContent()%></td>
+				<td><%=qc.getCreateDate()%></td>
+			</tr>
+			<%
+				}
+			%>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="3"></td>
+			</tr>
+		</tfoot>
+	</table>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
