@@ -46,4 +46,78 @@ public class QnaDao {
 		}
 		return list;
 	}
+	
+	public Qna selectQnaOne(int qnaNo) throws ClassNotFoundException, SQLException {
+		Qna qna = null;
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String sql = "SELECT"
+				+ " qna_title qnaTitle,"
+				+ " qna_category qnaCategory,"
+				+ " member_no memberNo,"
+				+ " qna_content qnaContent,"
+				+ " create_date createDate,"
+				+ " update_date updateDate "
+				+ "FROM qna "
+				+ "WHERE qna_no=?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, qnaNo);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			qna = new Qna();
+			
+			qna.setQnaTitle(rs.getString("qnaTitle"));
+			qna.setQnaCategory(rs.getString("qnaCategory"));
+			qna.setMemberNo(rs.getInt("memberNo"));
+			qna.setQnaContent(rs.getString("qnaContent"));
+			qna.setCreateDate(rs.getString("createDate"));
+			qna.setUpdateDate(rs.getString("updateDate"));
+		}
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return qna;
+	}
+	
+	public void insertQna(Qna qna) throws ClassNotFoundException, SQLException {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String sql = "INSERT INTO qna"
+				+ "(qna_title,"
+				+ " qna_category,"
+				+ " qna_secret,"
+				+ " member_no,"
+				+ " qna_content,"
+				+ " create_date,"
+				+ " update_date) "
+				+ "VALUE (?, ?, ?, ?, ?, NOW(), NOW())";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, qna.getQnaTitle());
+		stmt.setString(2, qna.getQnaCategory());
+		stmt.setString(3, qna.getQnaSecret());
+		stmt.setInt(4, qna.getMemberNo());
+		stmt.setString(5, qna.getQnaContent());
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+	}
 }
+
+
+
+
+
+
+
+
+
+

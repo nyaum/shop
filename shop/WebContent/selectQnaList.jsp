@@ -25,6 +25,9 @@
 	<br>
 	<!-- end submenu include -->
 	<div style="text-align:center">
+	<div style="text-align:right">
+	<a href="<%=request.getContextPath()%>/insertQnaForm.jsp?memberNo=<%=loginMember.getMemberNo()%>" class="btn btn-outline-dark">글 작성</a>
+	</div>
 	<h1>QnA</h1>
 	<br>
 	<table style="text-align:center" class="table table-striped">
