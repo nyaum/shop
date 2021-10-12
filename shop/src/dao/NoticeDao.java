@@ -10,7 +10,7 @@ import commons.DBUtil;
 import vo.*;
 
 public class NoticeDao {
-	public ArrayList<Notice> selectNoticeList() throws ClassNotFoundException, SQLException {
+	public ArrayList<Notice> selectNoticeListByPage(int beginRow, int rowPerPage) throws ClassNotFoundException, SQLException {
 		ArrayList<Notice> list = new ArrayList<>();
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -22,9 +22,12 @@ public class NoticeDao {
 				+ " create_date createDate,"
 				+ " update_date updateDate"
 				+ " FROM notice"
-				+ " ORDER BY create_date DESC";
+				+ " ORDER BY create_date DESC"
+				+ " LIMIT ?, ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, beginRow);
+		stmt.setInt(2, rowPerPage);
 		
 		System.out.println(stmt + " << noticeList stmt");
 		

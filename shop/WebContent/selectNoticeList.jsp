@@ -9,7 +9,16 @@
 	NoticeDao noticeDao = new NoticeDao();
 	ArrayList<Notice> noticeList = null;
 	
-	noticeList = noticeDao.selectNoticeList();
+	int currentPage = 1;
+	if(request.getParameter("currentPage") != null) {
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	}
+	
+	final int ROW_PER_PAGE = 10;
+	int beginRow = (currentPage-1)*ROW_PER_PAGE;
+	int totalCount = 0;
+	
+	noticeList = noticeDao.selectNoticeListByPage(beginRow, ROW_PER_PAGE);
 %>
 <!DOCTYPE html>
 <html>
@@ -70,5 +79,40 @@
 			</tr>
 		</tfoot>
 	</table>
+	<div style="text-align:center">
+	<%
+		if (beginRow >= 1) {
+	%>
+			<a href="<%=request.getContextPath()%>/selectNoticeList?currentPage=<%=currentPage-1%>" class="btn btn-outline-dark">이전</a>
+	<%	
+		}
+		int lastPage = totalCount / ROW_PER_PAGE;
+		
+		if(totalCount % ROW_PER_PAGE != 0) {
+			lastPage++;
+		}
+		
+		if(currentPage < lastPage) {
+	%>
+			<a href="<%=request.getContextPath()%>/selectNoticeList?currentPage=<%=currentPage+1%>" class="btn btn-outline-dark">다음</a>
+	<%
+		}
+	%>
+	</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

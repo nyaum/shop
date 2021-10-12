@@ -10,7 +10,7 @@ import commons.DBUtil;
 import vo.QnaComment;
 
 public class QnaCommentDao {
-	public ArrayList<QnaComment> qnaCommentList(int qnaNo) throws ClassNotFoundException, SQLException {
+	public ArrayList<QnaComment> qnaCommentListByPage(int qnaNo, int beginRow, int rowPerPage) throws ClassNotFoundException, SQLException {
 		ArrayList<QnaComment> list = new ArrayList<>();
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -21,10 +21,13 @@ public class QnaCommentDao {
 				+ " create_date createDate "
 				+ "FROM qna_comment "
 				+ "WHERE qna_no=? "
-				+ "ORDER BY create_date DESC";
+				+ "ORDER BY create_date DESC "
+				+ "LIMIT ?, ?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, qnaNo);
+		stmt.setInt(2, beginRow);
+		stmt.setInt(3, rowPerPage);
 		
 		System.out.println(stmt + " << stmt");
 		

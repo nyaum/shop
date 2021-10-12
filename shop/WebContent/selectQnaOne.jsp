@@ -13,8 +13,16 @@
 	
 	Qna q = qnaDao.selectQnaOne(qnaNo);
 	
-	ArrayList<QnaComment> qnaCommentList = qnaCommentDao.qnaCommentList(qnaNo);
-			
+	int currentPage = 1;
+	if(request.getParameter("currentPage") != null) {
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));	
+	}
+	
+	final int ROW_PER_PAGE = 5;
+	int beginRow = (currentPage-1)*ROW_PER_PAGE;
+	int totalCount = 0;
+	
+	ArrayList<QnaComment> qnaCommentList = qnaCommentDao.qnaCommentListByPage(qnaNo, beginRow, ROW_PER_PAGE);
 %>
 <!DOCTYPE html>
 <html>
@@ -97,6 +105,26 @@
 			</tr>
 		</tfoot>
 	</table>
+	<div style="text-align:center">
+	<%
+		if (beginRow >= 1) {
+	%>
+			<a href="<%=request.getContextPath()%>/selectQnaOne.jsp?qnaNo=<%=qnaNo%>&currentPage=<%=currentPage-1%>" class="btn btn-outline-dark">이전</a>
+	<%
+		}
+		int lastPage = totalCount / ROW_PER_PAGE;
+		
+		if(totalCount % ROW_PER_PAGE != 0) {
+			lastPage += 1;
+		}
+		
+		if (currentPage < lastPage) {
+	%>	
+			<a href="<%=request.getContextPath()%>/selectQnaOne.jsp?qnaNo=<%=qnaNo%>&currentPage=<%=currentPage+1%>" class="btn btn-outline-dark">다음</a>
+	<%
+		}
+	%>
+	</div>
 </body>
 </html>
 

@@ -9,7 +9,7 @@
 	
 	NoticeDao noticeDao = new NoticeDao();
 	
-	Notice n = noticeDao.selectNoticeOne(noticeNo);	
+	Notice n = noticeDao.selectNoticeOne(noticeNo);
 %>
 <!DOCTYPE html>
 <html>
