@@ -59,13 +59,21 @@
 	<div style="text-align:center">
 		<%
 			Member loginMember = (Member)session.getAttribute("loginMember");
-			if(loginMember.getMemberLevel() > 0) {
+			if (loginMember == null) {
+		%>
+				로그인 후에 글 작성 가능합니다.
+		<%
+			} else if(loginMember.getMemberLevel() > 0) {
 		%>
 			<a href="<%=request.getContextPath()%>/admin/deleteNoticeAction.jsp?noticeNo=<%=noticeNo%>" class="btn btn-outline-danger" id="delete">삭제</a>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<!--
 			<a href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=noticeNo%>" class="btn btn-outline-dark">수정</a>
 			-->
+		<%
+			} else {
+		%>
+				글 작성 권한이 없습니다.
 		<%
 			}
 		%>

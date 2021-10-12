@@ -42,10 +42,12 @@
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		if(loginMember == null) {
 		%>
-			<div>로그인 후에 주문이 가능합니다.<a href="<%=request.getContextPath()%>/loginForm.jsp">로그인</a></div>
+			<div style="text-align:center">로그인 후에 주문이 가능합니다.<a href="<%=request.getContextPath()%>/loginForm.jsp">로그인</a></div>
+			<br>
 		<%
 		} else {
 		%>
+		<br>
 		<form method="post" action="<%=request.getContextPath()%>/insertOrderAction.jsp">
 			<input type="hidden" name="ebookNo" value="<%=ebookNo%>">
 			<input type="hidden" name="memberNo" value="<%=loginMember.getMemberNo()%>">
@@ -56,17 +58,19 @@
 		}
 		%>
 	</div>
-	<div>
+	<div style="text-align:center">
 		<h2>상품 후기</h2>
 		<!-- 상품 평점 평균 -->
 		<!-- SELECT AVG(order_score) FROM order_comment where ebook_no=? ORDER BY ebook_no -->
 		<div>
 			평점 : <%=avgScore%>
 		</div>
+		<br>
 		<div>
 		<!-- 이 상품의 후기(페이징) -->
 		<!-- SELECT * FROM order_comment WHERE ebook_no=? limit ?, ? -->
 			<h2>후기 목록</h2>
+			<br>
 			<table style="text-align:center" class="table table-striped">
 				<thead>
 					<tr>

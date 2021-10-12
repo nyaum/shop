@@ -26,7 +26,17 @@
 	<!-- end submenu include -->
 	<div style="text-align:center">
 	<div style="text-align:right">
-	<a href="<%=request.getContextPath()%>/insertQnaForm.jsp?memberNo=<%=loginMember.getMemberNo()%>" class="btn btn-outline-dark">글 작성</a>
+	<%
+		if(loginMember == null) {
+	%>
+		<a href="<%=request.getContextPath()%>/loginForm.jsp">로그인</a> 후에 글 작성이 가능합니다.&nbsp;&nbsp;&nbsp;&nbsp;
+	<%
+		} else {
+	%>
+		<a href="<%=request.getContextPath()%>/insertQnaForm.jsp?memberNo=<%=loginMember.getMemberNo()%>" class="btn btn-outline-dark">글 작성</a>
+	<%
+		}
+	%>
 	</div>
 	<h1>QnA</h1>
 	<br>

@@ -23,6 +23,11 @@
 	int totalCount = 0;
 	
 	ArrayList<QnaComment> qnaCommentList = qnaCommentDao.qnaCommentListByPage(qnaNo, beginRow, ROW_PER_PAGE);
+	
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	if(loginMember == null) {
+		return;
+	}
 %>
 <!DOCTYPE html>
 <html>

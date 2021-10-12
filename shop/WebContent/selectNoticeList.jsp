@@ -37,9 +37,17 @@
 	<div style="text-align:right">
 	<%
 			Member loginMember = (Member)session.getAttribute("loginMember");
-			if (loginMember.getMemberLevel() > 0) {
+			if(loginMember == null) {		
+	%>
+				로그인 후에 이용 가능합니다.
+	<%	
+			} else if (loginMember.getMemberLevel() > 0) {
 	%>
 				<a href="<%=request.getContextPath()%>/admin/insertNoticeForm.jsp?memberNo=<%=loginMember.getMemberNo()%>" class="btn btn-outline-dark">글 작성</a>
+	<%
+			} else {
+	%>
+				관리자 권한이 없습니다.
 	<%
 			}
 	%>
