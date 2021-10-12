@@ -57,8 +57,14 @@
 	ArrayList<Ebook> popularEbookList = ebookDao.selectPopularEbookList();
 	
 	//공지사항 출력
-	final int INDEX_ROW_PER_PAGE = 3;
-	int indexBeginRow = 0;
+	int indexCurrentPage = 1;
+	if(request.getParameter("indexCurrentPage") != null) {
+		indexCurrentPage = Integer.parseInt(request.getParameter("indexCurrentPage"));
+	}
+	
+	final int INDEX_ROW_PER_PAGE = 2;
+	int indexBeginRow = (indexCurrentPage-1)*INDEX_ROW_PER_PAGE;
+	int indexTotalCount = 0;
 	
 	ArrayList<Notice> noticeList = noticeDao.selectNoticeListIndex(indexBeginRow, INDEX_ROW_PER_PAGE);
 	%>
@@ -100,6 +106,24 @@
 				</tr>
 			</tfoot>
 		</table>
+		<%
+		if(indexBeginRow >= 1) {
+		%>
+			<a href="<%=request.getContextPath()%>/index.jsp?indexCurrentPage=<%=indexCurrentPage-1%>">이전</a>
+		<%
+		}
+		int indexLastPage = indexTotalCount / INDEX_ROW_PER_PAGE;
+			
+		if(indexTotalCount % INDEX_ROW_PER_PAGE != 0) {
+			indexLastPage++;
+		}
+		
+		if (indexCurrentPage < indexLastPage) {
+		%>
+			<a href="<%=request.getContextPath()%>/index.jsp?indexCurrentPage=<%=indexCurrentPage+1%>">다음</a>
+		<%
+		}
+		%>
 	</div>
 	<br>
 	<!-- 인기 상품 5개 출력 -->
@@ -168,7 +192,7 @@
 		</tr>
 	</table>
 	<div>
-		
+
 	</div>
 	</div>
 </body>
